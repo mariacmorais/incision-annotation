@@ -696,6 +696,7 @@ function buildAdditionalFields(filenameHint) {
   const years_of_practice = document.getElementById("yearsPracticeInput")?.value.trim();
   const familiarity = document.getElementById("familiarityInput")?.value;
   const fatigue = document.getElementById("fatigueInput")?.value;
+  const confidence = document.getElementById("confidenceInput")?.value;
 
   if (participantId) {
     fields.participantId = participantId;
@@ -709,6 +710,7 @@ function buildAdditionalFields(filenameHint) {
   if (years_of_practice) fields.years_of_practice = years_of_practice;
   if (familiarity) fields.familiarity = familiarity;
   if (fatigue) fields.fatigue = fatigue;
+  if (confidence) fields.confidence = confidence;
 
   return fields;
 }
