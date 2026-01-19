@@ -687,13 +687,29 @@ function getFilenameHint() {
 
 function buildAdditionalFields(filenameHint) {
   const fields = { ...baseAdditionalFields };
-  if (participantIdValue) {
-    fields.studyId = participantIdValue;
-    fields.participantId = participantIdValue;
+
+  const participantId = participantIdInput.value.trim();
+  const age = document.getElementById("ageInput")?.value.trim();
+  const gender = document.getElementById("genderInput")?.value;
+  const level_of_training = document.getElementById("levelInput")?.value;
+  const specialty = document.getElementById("specialtyInput")?.value.trim();
+  const years_of_practice = document.getElementById("yearsPracticeInput")?.value.trim();
+  const familiarity = document.getElementById("familiarityInput")?.value;
+  const fatigue = document.getElementById("fatigueInput")?.value;
+
+  if (participantId) {
+    fields.participantId = participantId;
+    fields.studyId = participantId;
   }
-  if (filenameHint) {
-    fields.filenameHint = filenameHint;
-  }
+  if (filenameHint) fields.filenameHint = filenameHint;
+  if (age) fields.age = age;
+  if (gender) fields.gender = gender;
+  if (level_of_training) fields.level_of_training = level_of_training;
+  if (specialty) fields.specialty = specialty;
+  if (years_of_practice) fields.years_of_practice = years_of_practice;
+  if (familiarity) fields.familiarity = familiarity;
+  if (fatigue) fields.fatigue = fatigue;
+
   return fields;
 }
 
