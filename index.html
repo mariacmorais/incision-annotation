@@ -38,32 +38,15 @@
         </p>
       </div>
     </section>
-
-    <section class="card" aria-live="polite">
-      <header class="card__header card__header--space">
-        <div>
-          <h2>2. Watch Clip <span id="clipProgress" style="font-weight: 400; opacity: 0.7; font-size: 0.9em; margin-left: 0.5rem;"></span></h2>
-        </div>
-        <div class="card__actions">
-          <button id="replayBtn" type="button" class="ghost" disabled>Replay Clip</button>
-        </div>
-      </header>
-      <div class="card__body">
-        <div class="video-shell" id="videoShell">
-          <video id="caseVideo" playsinline preload="auto"></video>
-        </div>
-        <p class="help" id="videoStatus">Loading clip...</p>
-      </div>
-    </section>
 <!-- Survey Questions -->
 <div class="card__body card__body--stack" style="margin-top: 1rem;">
   <label class="field">
-    <span class="field__label">Age</span>
+    <span class="field__label">Enter Your Age</span>
     <input id="ageInput" class="field__control" type="number" min="18" placeholder="e.g., 28" />
   </label>
 
   <label class="field">
-    <span class="field__label">Gender</span>
+    <span class="field__label">Enter Your Gender</span>
     <select id="genderInput" class="field__control">
       <option value="">-- Select --</option>
       <option>Male</option>
@@ -73,7 +56,7 @@
   </label>
 
   <label class="field">
-    <span class="field__label">Level of Training</span>
+    <span class="field__label">Enter Your Level of Training</span>
     <select id="levelInput" class="field__control">
       <option value="">-- Select --</option>
       <option>PGY-1 General Surgery</option>
@@ -85,7 +68,7 @@
       <option>Attending Surgeon</option>
     </select>
   </label>
-
+  
   <label class="field">
     <span class="field__label">If Fellow/Attending, Specialty (optional)</span>
     <input id="specialtyInput" class="field__control" type="text" placeholder="e.g., HPB, MIS" />
@@ -122,6 +105,23 @@
     </select>
   </label>
 </div>
+
+    <section class="card" aria-live="polite">
+      <header class="card__header card__header--space">
+        <div>
+          <h2>2. Watch Clip <span id="clipProgress" style="font-weight: 400; opacity: 0.7; font-size: 0.9em; margin-left: 0.5rem;"></span></h2>
+        </div>
+        <div class="card__actions">
+          <button id="replayBtn" type="button" class="ghost" disabled>Replay Clip</button>
+        </div>
+      </header>
+      <div class="card__body">
+        <div class="video-shell" id="videoShell">
+          <video id="caseVideo" playsinline preload="auto"></video>
+        </div>
+        <p class="help" id="videoStatus">Loading clip...</p>
+      </div>
+    </section>
 
     <section class="card">
       <header class="card__header card__header--space">
