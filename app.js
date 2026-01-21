@@ -727,46 +727,6 @@ video.addEventListener("timeupdate", handleVideoTimeUpdate);
 video.addEventListener("ended", handleVideoEnded);
 clearLineBtn.addEventListener("click", clearLine);
 
-// Confidence question
-document.getElementById("submitConfidenceBtn").addEventListener("click", async () => {
-  const confidenceInput = document.getElementById("confidenceInput").value;
-
-  if (!confidenceInput) {
-    showToast("Please select a confidence level before submitting.");
-    return;
-  }
-
-  const participantId = participantIdInput.value.trim();
-
-  const body = {
-    participantId: participantId,
-    confidenceFinal: confidenceInput, // This is the final confidence rating
-    generatedAt: new Date().toISOString(),
-  };
-
-  try {
-    const response = await fetch(submissionConfig.endpoint, {
-      method: submissionConfig.method || "POST",
-      headers: submissionConfig.headers || { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        annotation: body, // wrap it like the other submissions
-      }),
-    });
-
-    if (!response.ok) throw new Error("Submission failed.");
-
-    showToast("Confidence response submitted. Thank you!");
-    
-    // Hide question & show final message
-    document.getElementById("confidenceSection").hidden = true;
-    completionCard.hidden = false;
-
-  } catch (error) {
-    showToast("Could not submit confidence. Try again.");
-    console.error(error);
-  }
-});
-
 // CHANGED: Use the wrapper function
 submitAnnotationBtn.addEventListener("click", handleSubmitAndNext);
 
@@ -795,3 +755,44 @@ if (window.PointerEvent) {
 const availableClips = getClips();
 loadClipByIndex(0); // Start at index 0
 applyParticipantId(participantIdInput.value);
+
+
+// Confidence submission handler
+document.getElementById("submitConfidenceBtn").addEventListener("click", async () => {
+  const confidenceInput = document.getElementById("confidenceInput").value;
+
+  if (!confidenceInput) {
+    showToast("Please select a confidence level before submitting.");
+    return;
+  }
+
+  const participantId = participantIdInput.value.trim();
+
+  const body = {
+    participantId: participantId,
+    confidenceFinal: confidenceInput,
+    generatedAt: new Date().toISOString(),
+  };
+
+  try {
+    const response = await fetch(submissionConfig.endpoint, {
+      method: submissionConfig.method || "POST",
+      headers: submissionConfig.headers || { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        annotation: body, // wrapped for Formspree
+      }),
+    });
+
+    if (!response.ok) throw new Error("Submission failed");
+
+    showToast("Confidence submitted. Thank you!");
+
+    // Hide question, show final message
+    document.getElementById("confidenceSection").hidden = true;
+    completionCard.hidden = false;
+
+  } catch (err) {
+    showToast("Could not submit. Try again.");
+    console.error(err);
+  }
+});
