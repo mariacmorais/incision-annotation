@@ -716,6 +716,74 @@ function buildAdditionalFields(filenameHint) {
   return fields;
 }
 
+async function submitInitialSurveyAsCSV() {
+  const endpoint = submissionConfig.endpoint;
+  if (!endpoint) {
+    console.error("Formspree endpoint missing.");
+    return;
+  }
+
+  // Collect values from index.html fields
+  const participantId = document.getElementById("participantIdInput")?.value.trim() || "";
+  const age = document.getElementById("ageInput")?.value.trim() || "";
+  const gender = document.getElementById("genderInput")?.value || "";
+  const level = document.getElementById("levelInput")?.value || "";
+  const specialty = document.getElementById("specialtyInput")?.value.trim() || "";
+  const yearsPractice = document.getElementById("yearsPracticeInput")?.value.trim() || "";
+  const familiarity = document.getElementById("familiarityInput")?.value || "";
+  const fatigue = document.getElementById("fatigueInput")?.value || "";
+  const timestamp = new Date().toISOString();
+
+  // CSV header + row
+  const header = [
+    "participantId",
+    "age",
+    "gender",
+    "level_of_training",
+    "specialty",
+    "years_of_practice",
+    "familiarity",
+    "fatigue",
+    "generatedAt"
+  ];
+
+  const row = [
+    participantId,
+    age,
+    gender,
+    level,
+    specialty,
+    yearsPractice,
+    familiarity,
+    fatigue,
+    timestamp
+  ];
+
+  const csvString = header.join(",") + "\n" + row.join(",");
+
+  const filename = `survey_${participantId || "anon"}_${timestamp}.csv`;
+
+  const payload = {
+    filename: filename,
+    csv: csvString
+  };
+
+  try {
+    const res = await fetch(endpoint, {
+      method: submissionConfig.method || "POST",
+      headers: submissionConfig.headers || { "Content-Type": "application/json" },
+      body: JSON.stringify({ annotation: payload }) // matches bodyWrapper in clip-config.js
+    });
+
+    if (!res.ok) throw new Error("Survey CSV failed to send");
+    console.log("Initial survey CSV submitted.");
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
 // Replaced clipSelect listener with simple load
 // clipSelect.addEventListener("change", loadSelectedClip); 
 
@@ -753,6 +821,7 @@ if (window.PointerEvent) {
 
 // INITIALIZATION
 const availableClips = getClips();
+submitInitialSurveyAsCSV(); // NEW
 loadClipByIndex(0); // Start at index 0
 applyParticipantId(participantIdInput.value);
 
